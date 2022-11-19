@@ -23,7 +23,10 @@ export default function Card({ data }) {
                     //                 setLoading(true);
                     //             }} 
                         className='block w-[60px] h-[30px] text-white bg-red-500 hover:bg-red-600 
-                    font-medium rounded-lg text-sm text-center active:translate-y-[2px]'>  { loading? 'loading..' : "delete"} </button>
+                    font-medium rounded-lg text-sm text-center active:translate-y-[2px]'>  
+                    {/* { loading? 'loading..' : "delete"}  */}
+                    delete
+                    </button>
                 </div>
 
             </div> 
