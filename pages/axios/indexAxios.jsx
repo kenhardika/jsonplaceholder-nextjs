@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { axiosDeleteData, axiosEditData, axiosGetData, axiosPostData } from "../../api/axiosAPI";
 import Card from "../../components/Card";
-import ContentContainer from "../../components/ContentContainer";
 import FormsModal from "../../components/Modal/FormsModal";
 import ModalContainer from "../../components/Modal/ModalContainer";
 
@@ -91,50 +90,50 @@ export default function IndexAxios(props) {
     },[getDataFromAPI]);
 
     return (
-        <ContentContainer>
-                {
-                 showModal? 
-                  <ModalContainer onHideModal = {()=> setShowModal(false) }> 
-                    <FormsModal 
-                        onChangeEvent = {onChangeEvent} 
-                        onChangeCompany ={onChangeCompany}
-                        onHandleSubmit = {handleSubmit}
-                        onHandleEdit = {handleEdit}
-                        onHideModal = {()=> setShowModal(false)}
-                        onShowAddButton = {showAddButton}
-                        selectedData = {selectedData}
-                        />
-                  </ModalContainer> : ""
-                }
-                <p className="text-3xl font-bold p-5"> Data Ids </p>
-                <div className="flex flex-col items-center h-[800px] ">
-                    <button className="block w-[100px] h-[40px] text-white bg-red-400 hover:bg-red-600 
-                        font-medium rounded-lg text-sm text-center active:translate-y-[2px]"
-                        onClick = {()=>{
-                            setShowModal(true);
-                            setShowAddButton(true);
-                            setSelectedData(defaultData);
-                            }} 
-                         >
-                        + Add
-                    </button>
-                    <div className='w-[1500px] border-solid p-5 gap-5 
-                        grid grid-cols-4'>
-                            { data? 
-                                data.map((item) => { 
-                                    return <Card 
-                                            key={item.id} 
-                                            data={item}
-                                            onHandleDelete = {()=> handleDelete(item.id)}
-                                            onHandleEdit = {()=> {
-                                                setShowAddButton(false);
-                                                setSelectedData(item);
-                                                setShowModal(true);
-                                            }}
-                                            /> } ) : ""
-                            }
-                    </div>
-                 </div>
-        </ContentContainer>
+        <div className='flex h-auto w-full bg-scroll bg-slate-300 flex-col justify-start items-center p-5 font-poppins'>
+        {
+            showModal? 
+            <ModalContainer onHideModal = {()=> setShowModal(false) }> 
+            <FormsModal 
+                onChangeEvent = {onChangeEvent} 
+                onChangeCompany ={onChangeCompany}
+                onHandleSubmit = {handleSubmit}
+                onHandleEdit = {handleEdit}
+                onHideModal = {()=> setShowModal(false)}
+                onShowAddButton = {showAddButton}
+                selectedData = {selectedData}
+                />
+            </ModalContainer> : ""
+        }
+            <p className="text-3xl font-bold p-5"> Data Ids </p>
+            <div className="flex flex-col items-center h-[800px] ">
+                <button className="block w-[100px] h-[40px] text-white bg-red-400 hover:bg-red-600 
+                    font-medium rounded-lg text-sm text-center active:translate-y-[2px]"
+                    onClick = {()=>{
+                        setShowModal(true);
+                        setShowAddButton(true);
+                        setSelectedData(defaultData);
+                        }} 
+                        >
+                    + Add
+                </button>
+                <div className='w-[1500px] border-solid p-5 gap-5 
+                    grid grid-cols-4'>
+                        { data? 
+                            data.map((item) => { 
+                                return <Card 
+                                        key={item.id} 
+                                        data={item}
+                                        onHandleDelete = {()=> handleDelete(item.id)}
+                                        onHandleEdit = {()=> {
+                                            setShowAddButton(false);
+                                            setSelectedData(item);
+                                            setShowModal(true);
+                                        }}
+                                        /> } ) : ""
+                        }
+                </div>
+            </div>
+        </div>
     );
 }
