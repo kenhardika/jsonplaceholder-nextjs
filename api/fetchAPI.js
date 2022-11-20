@@ -36,10 +36,9 @@ async function fetchEditData(payload){
     // userId: 1,
 
 async function fetchDeleteData(id){
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+    return await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
         method: 'DELETE',
     });
-    return response.json();
 }
 
 export {fetchGetData, fetchEditData, fetchPostData, fetchDeleteData}
