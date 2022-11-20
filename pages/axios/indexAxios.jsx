@@ -1,15 +1,30 @@
 import { useCallback, useEffect, useState } from "react";
-import { axiosDeleteData, axiosGetData, axiosPostData } from "../../api/axiosAPI";
+import { axiosDeleteData, axiosEditData, axiosGetData, axiosPostData } from "../../api/axiosAPI";
 import Card from "../../components/Card";
 import ContentContainer from "../../components/ContentContainer";
 import FormsModal from "../../components/Modal/FormsModal";
 import ModalContainer from "../../components/Modal/ModalContainer";
 
 export default function IndexAxios(props) {
+    const defaultData = {
+        "id": 0,
+        "name": "",
+        "username": "",
+        "email": "",
+        "phone": "",
+        "website": "",
+        "company": {
+        "name": "",
+        "catchPhrase": "",
+        "bs": ""
+        }
+    };
+    
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showAddButton, setShowAddButton] = useState(true);
     const [selectedData, setSelectedData] = useState({});
-    const [loading, setLoading] = useState(false);
+
     const getDataFromAPI = useCallback( async () => {
         const response = await axiosGetData();
         setData(response.data);
@@ -39,17 +54,28 @@ export default function IndexAxios(props) {
         }
     }
 
+    async function handleEdit(e){
+        e.preventDefault();
+            if(selectedData.id < 10){
+                const responseAPI = await axiosEditData(selectedData);
+                const updatedItems = data.map(item => item.id === responseAPI.data.id ? responseAPI.data : item);
+                setData(updatedItems);
+                setShowModal(false);
+            } 
+            else{
+                const updatedItems = data.map(item => item.id === selectedData.id ? selectedData : item);
+                setData(updatedItems);
+                setShowModal(false);
+            }
+    }
+
     async function handleSubmit(e){
         e.preventDefault();
         let responseAPI = await axiosPostData(selectedData);
         responseAPI.data.id = randomizeID();
-        console.log(responseAPI.data);
-
         const responseData = responseAPI.data;
         setData((prev)=>([responseData, ...prev]));
         setShowModal(false);
-        // setShowAddButton(false);
-        // setLoading(false);
     }
     
     async function handleDelete(selectedDataId){
@@ -57,7 +83,6 @@ export default function IndexAxios(props) {
             if(responseAPI.status === 200 ){
                     const newData = data.filter((item)=> item.id !== selectedDataId);
                     setData(newData);
-                    setLoading(false);
                 }
     }
 
@@ -74,16 +99,21 @@ export default function IndexAxios(props) {
                         onChangeEvent = {onChangeEvent} 
                         onChangeCompany ={onChangeCompany}
                         onHandleSubmit = {handleSubmit}
+                        onHandleEdit = {handleEdit}
                         onHideModal = {()=> setShowModal(false)}
+                        onShowAddButton = {showAddButton}
+                        selectedData = {selectedData}
                         />
                   </ModalContainer> : ""
                 }
                 <p className="text-3xl font-bold p-5"> Data Ids </p>
-                <div className="flex flex-col items-center h-[1000px] ">
+                <div className="flex flex-col items-center h-auto ">
                     <button className="block w-[100px] h-[40px] text-white bg-red-400 hover:bg-red-600 
                         font-medium rounded-lg text-sm text-center active:translate-y-[2px]"
                         onClick = {()=>{
                             setShowModal(true);
+                            setShowAddButton(true);
+                            setSelectedData(defaultData);
                             }} 
                          >
                         + Add
@@ -96,6 +126,11 @@ export default function IndexAxios(props) {
                                             key={item.id} 
                                             data={item}
                                             onHandleDelete = {()=> handleDelete(item.id)}
+                                            onHandleEdit = {()=> {
+                                                setShowAddButton(false);
+                                                setSelectedData(item);
+                                                setShowModal(true);
+                                            }}
                                             /> } ) : ""
                             }
                     </div>

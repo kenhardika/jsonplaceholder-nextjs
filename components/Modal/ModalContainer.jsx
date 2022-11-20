@@ -1,8 +1,6 @@
-import React from 'react';
-
 function ModalContainer({ onHideModal, children }) {
     return (
-        <div className='h-screen w-screen left-0 top-0 fixed backdrop-blur-sm'>
+        <div className='h-screen w-screen left-0 top-0 fixed backdrop-blur-sm z-10'>
             <div className=" w-auto h-auto mx-[500px] my-[150px] outline-none focus:outline-none  bg-white rounded-lg shadow-md">
                     <div className='flex justify-end py-3 px-6 lg:px-8
                          text-white bg-white rounded-t-lg h-1/5 items-center'>
