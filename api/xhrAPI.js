@@ -6,7 +6,7 @@ function xhrGetData(){
         request.responseType ='json';
         request.onload = function() {
             if (request.readyState == 4 && request.status == 200) {
-                resolve(request.response.data);
+                resolve(request.response);
             }
             else if(http.readyState == 4 && http.status > 399){
                 reject(request.response);
@@ -15,29 +15,23 @@ function xhrGetData(){
         request.send();
         });
 }
-function xhrPostData(data){
+function xhrPostData(payload){
     const request = new XMLHttpRequest();
     const url = `https://jsonplaceholder.typicode.com/users`;
-    let formBody = [];
-    for (let property in data) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(data[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
+    
     return new Promise((resolve, reject) => {
         request.open('POST', url);
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.setRequestHeader('Content-type', 'application/json');
         request.responseType= 'json';
         request.onload = function() {
-            if(request.readyState == 4 && request.status == 200) {
-                resolve(request.response.data);
+            if(request.readyState == 4 && request.status < 300) {
+                resolve(request.response);
             }
             else if(request.readyState == 4 && request.status > 399){
                 reject(request.response);
             }
         }
-        request.send(formBody);
+        request.send(JSON.stringify(payload));
     });
 }
 function xhrEditData(payload){
@@ -46,17 +40,17 @@ function xhrEditData(payload){
 
     return new Promise((resolve, reject) => {
         request.open('PUT', url);
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.setRequestHeader('Content-type', 'application/json');
         request.responseType= 'json';
         request.onload = function() {
             if(request.readyState == 4 && request.status == 200) {
-                resolve(request.response.data);
+                resolve(request.response);
             }
             else if(request.readyState == 4 && request.status > 399){
                 reject(request.response);
             }
         }
-        request.send(payload);
+        request.send(JSON.stringify(payload));
     });
 }
 
@@ -71,7 +65,8 @@ function xhrDeleteData(id){
         request.responseType= 'json';
         request.onload = function() {
             if(request.readyState == 4 && request.status == 200) {
-                resolve(request.response);
+                console.log(request);
+                resolve(request);
             }
             else if(request.readyState == 4 && request.status > 399){
                 reject(request.response);
