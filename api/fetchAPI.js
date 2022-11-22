@@ -28,8 +28,8 @@ async function fetchGetData() {
     return response.json();
   }
   
-  async function fetchDeleteData(id) {
-    return await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+  function fetchDeleteData(id) {
+    return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
       method: "DELETE",
     });
   }
