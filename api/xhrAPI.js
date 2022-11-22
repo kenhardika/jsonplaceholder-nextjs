@@ -1,6 +1,7 @@
+const url = `https://jsonplaceholder.typicode.com/users`;
+const request = new XMLHttpRequest();
+
 function xhrGetData() {
-    const request = new XMLHttpRequest();
-    const url = `https://jsonplaceholder.typicode.com/users`;
     return new Promise((resolve, reject) => {
       request.open("GET", url);
       request.responseType = "json";
@@ -15,9 +16,6 @@ function xhrGetData() {
     });
   }
   function xhrPostData(payload) {
-    const request = new XMLHttpRequest();
-    const url = `https://jsonplaceholder.typicode.com/users`;
-  
     return new Promise((resolve, reject) => {
       request.open("POST", url);
       request.setRequestHeader("Content-type", "application/json");
@@ -33,11 +31,8 @@ function xhrGetData() {
     });
   }
   function xhrEditData(payload) {
-    const request = new XMLHttpRequest();
-    const url = `https://jsonplaceholder.typicode.com/users/${payload.id}`;
-  
     return new Promise((resolve, reject) => {
-      request.open("PUT", url);
+      request.open("PUT", `${url}/${payload.id}`);
       request.setRequestHeader("Content-type", "application/json");
       request.responseType = "json";
       request.onload = function () {
@@ -52,11 +47,8 @@ function xhrGetData() {
   }
   
   function xhrDeleteData(id) {
-    const request = new XMLHttpRequest();
-    const url = `https://jsonplaceholder.typicode.com/users/${id}`;
-  
     return new Promise((resolve, reject) => {
-      request.open("DELETE", url);
+      request.open("DELETE", `${url}/${id}`);
       request.setRequestHeader(
         "Content-type",
         "application/x-www-form-urlencoded"
