@@ -140,11 +140,26 @@ Closures
    ```
 
 Hoisting
-   adalah behaviour atau proses dimana deklarasi functions, variabel, atau class dipindahkan ke bagian paling atas dari scopenya masing masing sebelum execution/proses pemanggilan data tsb terjadi.
-
-   ```
-   const x = 10;
-   console.log(x+y) // error y is undefined 
-   const y = 10;
+   adalah behaviour atau proses dimana deklarasi functions, variabel, atau class dibaca menjadi deklarasi terlebih dahulu sebelum execution/proses pemanggilan data tsb terjadi. 
    
-   ```
+   Berikut adalah contoh behaviour hoisting 
+      1. Dapat memanggil/menggunakan functions sebelum melewati line deklarasi functions yang tersebut. Behavior ini terjadi pada deklarasi functions.
+         ```
+         names(); // "hey my name is..."
+         function names(){
+            console.log("hey my name is...");
+         }
+         ```
+      2. Variabel (var) dapat dipanggil sebelum dideklarasi. Return undefined tetapi tidak menyebabkan error. 
+          ```
+         console.log(x) // undefined 
+         var x = 10;
+            
+         ```
+      3. Non-hoisting (let/const), Variabel akan return error jika dipanggil sebelum dideklarasi 
+
+          ```
+         console.log(x) // ReferenceError: Cannot access 'x' before initialization 
+         const x = 10;
+            
+         ```

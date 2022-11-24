@@ -1,10 +1,12 @@
+import url from "./url"
+
 async function fetchGetData() {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const response = await fetch(url);
     return response.json();
   }
   
   async function fetchPostData(payload) {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+    const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify(payload),
       headers: {
@@ -16,7 +18,7 @@ async function fetchGetData() {
   
   async function fetchEditData(payload) {
     const response = await fetch(
-      `https://jsonplaceholder.typicode.com/users/${payload.id}`,
+      `${url}/${payload.id}`,
       {
         method: "PUT",
         body: JSON.stringify(payload),
@@ -29,7 +31,7 @@ async function fetchGetData() {
   }
   
   function fetchDeleteData(id) {
-    return fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+    return fetch(`${url}/${id}`, {
       method: "DELETE",
     });
   }
